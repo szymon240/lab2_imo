@@ -2,9 +2,8 @@ from swaps import swap_nodes_within_cycle, swap_edges_within_cycle, swap_nodes_b
 from utils import load_from_tsp, initialize_random_cycles, cycle_length
 import time
 
-def steepest_within_cycle_and_edges(distance_matrix):
+def steepest_within_cycle_and_edges(distance_matrix, first_cycle, second_cycle):
     start_time = time.time()
-    first_cycle, second_cycle, nodes = initialize_random_cycles(distance_matrix)
     best_length = cycle_length(first_cycle, distance_matrix) + cycle_length(second_cycle, distance_matrix)
 
     improved = True
@@ -50,9 +49,8 @@ def steepest_within_cycle_and_edges(distance_matrix):
     return (first_cycle, second_cycle), best_length, execution_time
 
 
-def steepest_between_cycles(distance_matrix):
+def steepest_between_cycles(distance_matrix, first_cycle, second_cycle):
     start_time = time.time()
-    first_cycle, second_cycle, nodes = initialize_random_cycles(distance_matrix)
     best_length = cycle_length(first_cycle, distance_matrix) + cycle_length(second_cycle, distance_matrix)
 
     improved = True

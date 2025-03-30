@@ -3,9 +3,8 @@ from utils import load_from_tsp, initialize_random_cycles, cycle_length
 import random
 import time
 
-def greedy_within_cycle(distance_matrix, randomize=True):
+def greedy_within_cycle(distance_matrix, first_cycle, second_cycle, randomize=True):
     start_time = time.time()
-    first_cycle, second_cycle, nodes = initialize_random_cycles(distance_matrix)
     best_length = cycle_length(first_cycle, distance_matrix) + cycle_length(second_cycle, distance_matrix)
 
     improved = True
@@ -60,9 +59,8 @@ def greedy_within_cycle(distance_matrix, randomize=True):
     return (first_cycle, second_cycle), best_length, execution_time
 
 
-def greedy_between_cycles(distance_matrix, randomize=True):
+def greedy_between_cycles(distance_matrix, first_cycle, second_cycle, randomize=True):
     start_time = time.time()  # Start timer
-    first_cycle, second_cycle, nodes = initialize_random_cycles(distance_matrix)
     best_length = cycle_length(first_cycle, distance_matrix) + cycle_length(second_cycle, distance_matrix)
 
     improved = True

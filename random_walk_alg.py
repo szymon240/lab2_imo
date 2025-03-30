@@ -3,8 +3,7 @@ from utils import load_from_tsp, initialize_random_cycles, cycle_length
 import random
 import time
 
-def random_walk(distance_matrix, max_time):
-    first_cycle, second_cycle, nodes = initialize_random_cycles(distance_matrix)
+def random_walk(distance_matrix, first_cycle, second_cycle, max_time):
     best_solution = (first_cycle, second_cycle)
     best_length = cycle_length(first_cycle, distance_matrix) + cycle_length(second_cycle, distance_matrix)
 

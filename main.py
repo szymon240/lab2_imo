@@ -2,58 +2,216 @@ from greedy_alg import greedy_within_cycle, greedy_between_cycles
 from random_walk_alg import random_walk
 from steepest_alg import steepest_within_cycle_and_edges, steepest_between_cycles
 from utils import load_from_tsp
+import utils
 
 if __name__ == "__main__":
     kroa200_matrix, kroa200_coords = load_from_tsp('datasets/kroA200.tsp')
     krob200_matrix, krob200_coords = load_from_tsp('datasets/kroB200.tsp')
+    kroa200_cycle1, kroa200_cycle2, krob200_cycle1, krob200_cycle2 = utils.load_regret_results('datasets/results.json')
+    kroa200_cycle1_random, kroa200_cycle2_random, _ = utils.initialize_random_cycles(kroa200_matrix)
+    krob200_cycle1_random, krob200_cycle2_random, _ = utils.initialize_random_cycles(krob200_matrix)
 
-    solution_intra, length_intra, time_intra = greedy_within_cycle(kroa200_matrix, randomize=True)
-    print("\nGreedy search (node and edge swaps):")
-    print(f"Best solution length: {length_intra}")
-    print(f"Execution time: {time_intra:.4f} seconds")
 
-    solution_inter, length_inter, time_inter = greedy_between_cycles(kroa200_matrix, randomize=True)
-    print("\nGreedy search (node swap between cycles):")
-    print(f"Best solution length: {length_inter}")
-    print(f"Execution time: {time_inter:.4f} seconds")
+    # Run algorithms on kroA200 dataset
+    kroa200_times = []
 
-    solution_steepest_within, length_steepest_within, time_steepest_within = steepest_within_cycle_and_edges(kroa200_matrix)
-    print("\nSteepest local search (node and edge swaps within cycle):")
-    print(f"Best solution length: {length_steepest_within}")
-    print(f"Execution time: {time_steepest_within:.4f} seconds")
+    kroa200_times.append(
+        utils.run_test(
+            "kroA: Greedy search (node and edge swaps)",
+            kroa200_matrix,
+            kroa200_coords,
+            kroa200_cycle1,
+            kroa200_cycle2,
+            greedy_within_cycle
+        )
+    )
 
-    solution_steepest_between, length_steepest_between, time_steepest_between = steepest_between_cycles(kroa200_matrix)
-    print("\nSteepest local search (node swaps between cycles):")
-    print(f"Best solution length: {length_steepest_between}")
-    print(f"Execution time: {time_steepest_between:.4f} seconds")
+    kroa200_times.append(
+        utils.run_test(
+            "kroA: Greedy search (node and edge swaps) random",
+            kroa200_matrix,
+            kroa200_coords,
+            kroa200_cycle1_random,
+            kroa200_cycle2_random,
+            greedy_within_cycle
+        )
+    )
 
-    solution_random, length_random = random_walk(kroa200_matrix, 40)
-    print("\nRandom walk search:")
-    print(f"Best solution length: {length_random}")
-    print(f"Execution time: 40 seconds")
+    kroa200_times.append(
+        utils.run_test(
+            "kroA: Greedy search (node swap between cycles)",
+            kroa200_matrix,
+            kroa200_coords,
+            kroa200_cycle1,
+            kroa200_cycle2,
+            greedy_between_cycles
+        )
+    )
+
+    kroa200_times.append(
+        utils.run_test(
+            "kroA: Greedy search (node swap between cycles) random",
+            kroa200_matrix,
+            kroa200_coords,
+            kroa200_cycle1_random,
+            kroa200_cycle2_random,
+            greedy_between_cycles
+        )
+    )
+
+    kroa200_times.append(
+        utils.run_test(
+            "kroA: Steepest local search (node and edge swaps within cycle)",
+            kroa200_matrix,
+            kroa200_coords,
+            kroa200_cycle1,
+            kroa200_cycle2,
+            steepest_within_cycle_and_edges
+        )
+    )
+
+    kroa200_times.append(
+        utils.run_test(
+            "kroA: Steepest local search (node and edge swaps within cycle) random",
+            kroa200_matrix,
+            kroa200_coords,
+            kroa200_cycle1_random,
+            kroa200_cycle2_random,
+            steepest_within_cycle_and_edges
+        )
+    )
+
+    kroa200_times.append(
+        utils.run_test(
+            "kroA: Steepest local search (node swaps between cycles)",
+            kroa200_matrix,
+            kroa200_coords,
+            kroa200_cycle1,
+            kroa200_cycle2,
+            steepest_between_cycles
+        )
+    )
+
+    kroa200_times.append(
+        utils.run_test(
+            "kroA: Steepest local search (node swaps between cycles) random",
+            kroa200_matrix,
+            kroa200_coords,
+            kroa200_cycle1_random,
+            kroa200_cycle2_random,
+            steepest_between_cycles
+        )
+    )
+
+    min_time = min(kroa200_times)
+    utils.run_test(
+        "kroA: Random walk search",
+        kroa200_matrix,
+        kroa200_coords,
+        kroa200_cycle1,
+        kroa200_cycle2,
+        random_walk,
+        min_time
+    )
 
     # Run algorithms on kroB200 dataset
-    solution_intra_b, length_intra_b, time_intra_b = greedy_within_cycle(krob200_matrix, randomize=True)
-    print("\nGreedy search (node and edge swaps) on kroB200:")
-    print(f"Best solution length: {length_intra_b}")
-    print(f"Execution time: {time_intra_b:.4f} seconds")
+    krob200_times = []
 
-    solution_inter_b, length_inter_b, time_inter_b = greedy_between_cycles(krob200_matrix, randomize=True)
-    print("\nGreedy search (node swap between cycles) on kroB200:")
-    print(f"Best solution length: {length_inter_b}")
-    print(f"Execution time: {time_inter_b:.4f} seconds")
+    krob200_times.append(
+        utils.run_test(
+            "kroB: Greedy search (node and edge swaps)",
+            krob200_matrix,
+            krob200_coords,
+            krob200_cycle1,
+            krob200_cycle2,
+            greedy_within_cycle
+        )
+    )
 
-    solution_steepest_within_b, length_steepest_within_b, time_steepest_within_b = steepest_within_cycle_and_edges(krob200_matrix)
-    print("\nSteepest local search (node and edge swaps within cycle) on kroB200:")
-    print(f"Best solution length: {length_steepest_within_b}")
-    print(f"Execution time: {time_steepest_within_b:.4f} seconds")
+    krob200_times.append(
+        utils.run_test(
+            "kroB: Greedy search (node and edge swaps) random",
+            krob200_matrix,
+            krob200_coords,
+            krob200_cycle1_random,
+            krob200_cycle2_random,
+            greedy_within_cycle
+        )
+    )
 
-    solution_steepest_between_b, length_steepest_between_b, time_steepest_between_b = steepest_between_cycles(krob200_matrix)
-    print("\nSteepest local search (node swaps between cycles) on kroB200:")
-    print(f"Best solution length: {length_steepest_between_b}")
-    print(f"Execution time: {time_steepest_between_b:.4f} seconds")
+    krob200_times.append(
+        utils.run_test(
+            "kroB: Greedy search (node swap between cycles)",
+            krob200_matrix,
+            krob200_coords,
+            krob200_cycle1,
+            krob200_cycle2,
+            greedy_between_cycles
+        )
+    )
 
-    solution_random, length_random = random_walk(krob200_matrix, 40)
-    print("\nRandom walk search on kroB200:")
-    print(f"Best solution length: {length_random}")
-    print(f"Execution time: 40 seconds")
+    krob200_times.append(
+        utils.run_test(
+            "kroB: Greedy search (node swap between cycles) random",
+            krob200_matrix,
+            krob200_coords,
+            krob200_cycle1_random,
+            krob200_cycle2_random,
+            greedy_between_cycles
+        )
+    )
+
+    krob200_times.append(
+        utils.run_test(
+            "kroB: Steepest local search (node and edge swaps within cycle)",
+            krob200_matrix,
+            krob200_coords,
+            krob200_cycle1,
+            krob200_cycle2,
+            steepest_within_cycle_and_edges
+        )
+    )
+
+    krob200_times.append(
+        utils.run_test(
+            "kroB: Steepest local search (node and edge swaps within cycle) random",
+            krob200_matrix,
+            krob200_coords,
+            krob200_cycle1_random,
+            krob200_cycle2_random,
+            steepest_within_cycle_and_edges
+        )
+    )
+
+    krob200_times.append(
+        utils.run_test(
+            "kroB: Steepest local search (node swaps between cycles)",
+            krob200_matrix,
+            krob200_coords,
+            krob200_cycle1,
+            krob200_cycle2,
+            steepest_between_cycles
+        )
+    )
+
+    krob200_times.append(
+        utils.run_test(
+            "kroB: Steepest local search (node swaps between cycles) random",
+            krob200_matrix,
+            krob200_coords,
+            krob200_cycle1_random,
+            krob200_cycle2_random,
+            steepest_between_cycles
+        )
+    )
+
+    min_time = min(krob200_times)
+    utils.run_test(
+        "kroB: Random walk search",
+        krob200_matrix,
+        krob200_coords,
+        krob200_cycle1,
+        krob200_cycle2,
+        random_walk,
+        min_time
+    )
