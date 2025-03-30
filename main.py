@@ -7,14 +7,13 @@ if __name__ == "__main__":
     kroa200_matrix, kroa200_coords = load_from_tsp('datasets/kroA200.tsp')
     krob200_matrix, krob200_coords = load_from_tsp('datasets/kroB200.tsp')
 
-    # Run all algorithms and print results with timing
     solution_intra, length_intra, time_intra = greedy_within_cycle(kroa200_matrix, randomize=True)
-    print("\nGreedy with intra-cycle neighborhood (node and edge swaps):")
+    print("\nGreedy search (node and edge swaps):")
     print(f"Best solution length: {length_intra}")
     print(f"Execution time: {time_intra:.4f} seconds")
 
     solution_inter, length_inter, time_inter = greedy_between_cycles(kroa200_matrix, randomize=True)
-    print("\nGreedy with inter-cycle neighborhood (node swap between cycles):")
+    print("\nGreedy search (node swap between cycles):")
     print(f"Best solution length: {length_inter}")
     print(f"Execution time: {time_inter:.4f} seconds")
 
@@ -35,12 +34,12 @@ if __name__ == "__main__":
 
     # Run algorithms on kroB200 dataset
     solution_intra_b, length_intra_b, time_intra_b = greedy_within_cycle(krob200_matrix, randomize=True)
-    print("\nGreedy with intra-cycle neighborhood on kroB200:")
+    print("\nGreedy search (node and edge swaps) on kroB200:")
     print(f"Best solution length: {length_intra_b}")
     print(f"Execution time: {time_intra_b:.4f} seconds")
 
     solution_inter_b, length_inter_b, time_inter_b = greedy_between_cycles(krob200_matrix, randomize=True)
-    print("\nGreedy with inter-cycle neighborhood on kroB200:")
+    print("\nGreedy search (node swap between cycles) on kroB200:")
     print(f"Best solution length: {length_inter_b}")
     print(f"Execution time: {time_inter_b:.4f} seconds")
 
